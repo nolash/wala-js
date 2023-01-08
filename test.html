@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<script defer src="node_modules/alpinejs/dist/cdn.min.js"></script>
+		<script src="node_modules/openpgp/dist/openpgp.min.js"></script>
+		<script src="node_modules/jssha/dist/sha256.js"></script>
+		<script src="node_modules/MimeJS/src/base64.js"></script>
+		<script src="node_modules/MimeJS/dist/mime-js.min.js"></script>
+		<script src="wala.js"></script>
+		<script src="demo.js"></script>
+	</head>
+	<body x-init="wala_run">
+		<div>
+			<form onSubmit='return false;'>
+				<input type="password" id="wala_password" placeholder='passphrase' />
+				<button onClick='wala_demo_run(); return false;'>go</button>
+			</form>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,14 @@
+{
+	"name": "walajs",
+	"version": "0.0.1",
+	"license": "GPLV3",
+	"dependencies": {
+		"alpinejs": "3.10.3",
+		"openpgp": "5.5.0",
+		"jssha": "3.2.0",
+		"MimeJS": "git://git.defalsify.org/mime-js.git#lash/plain-part"
+	},
+	"engines": {
+		"node": "^18.8"	
+	}
+}
