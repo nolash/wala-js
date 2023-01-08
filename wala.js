@@ -9,6 +9,7 @@ const _WALA_STATE = {
 	KEY_PASSPHRASE_EMPTY: 1 << 7,
 	KEY_GENERATE: 1 << 8,
 	STORE_AVAILABLE: 1 << 9,
+	READY: 1 << 10,
 	PANICKED: 1 << 63,
 }
 const _WALA_STATE_KEYS = Object.keys(_WALA_STATE);
@@ -67,7 +68,7 @@ function wala_logStateChange(v) {
 
 function wala_checkState(bit_check, bit_field) {
 	if (bit_field != 0 && !bit_field) {
-		bit_field = g_state;
+		bit_field = _WALA.state;
 	}
 	return (bit_check & bit_field) > 0;
 };
@@ -474,7 +475,7 @@ async function wala_setStore(v) {
 //
 // Entry point
 //
-async function wala_run() {
+async function wala_init() {
 	await wala_loadSettings();
 	let store = undefined;
 	if (_WALA.settings.data_endpoint) {
@@ -482,5 +483,16 @@ async function wala_run() {
 	} else {
 		store = new wala_MemStore();
 	}
-	wala_setStore(store);
+	await wala_setStore(store);
 }
+
+async function wala_initEventListener(ev) {
+	if (wala_checkState(_WALA_STATE.LOAD_SETTINGS, ev.state)) {
+		if (wala_checkState(_WALA_STATE.STORE_AVAILABLE, ev.state)) {
+			window.removeEventListener('wala_messagestatechange', wala_initEventListener);
+			wala_stateChange('wala is ready to use', _WALA_STATE.READY);
+		}
+	}
+}
+
+window.addEventListener('wala_messagestatechange', wala_initEventListener);

@@ -8,8 +8,8 @@
 		<script src="wala.js"></script>
 		<script src="demo.js"></script>
 	</head>
-	<body x-init="wala_run">
-		<div>
+	<body x-init="wala_init">
+		<div id="main" style="display: none;">
 			<form onSubmit='return false;'>
 				<input type="password" id="wala_password" placeholder='passphrase' />
 				<button onClick='wala_demo_run(); return false;'>go</button>
